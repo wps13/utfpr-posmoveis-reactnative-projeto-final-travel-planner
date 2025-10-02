@@ -1,10 +1,12 @@
 import TpTextInput from "@/components/tpTextInput";
 import planner from "@/services/ai/planner";
 import { styles } from "@/styles";
+
 import * as Clipboard from 'expo-clipboard';
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Markdown from 'react-native-markdown-display';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Index() {
   const [destiny, setDestiny] = useState('')
@@ -53,40 +55,42 @@ export default function Index() {
 
 
   return (
-    <ScrollView>
-      <View
-        style={styles.container}
-      >
-        <Text style={styles.title}>Travel Planner</Text>
-        <Text style={styles.questionTitle}>Para onde irá viajar?</Text>
-        <TpTextInput placeholder="Natal - RN" label="Destino" value={destiny} onChangeText={setDestiny} />
-        <Text style={styles.questionTitle}>Por quanto tempo?</Text>
-        <TpTextInput placeholder="3 dias" label="Tempo" value={duration} onChangeText={setDuration} />
-        <Text style={styles.questionTitle}>Quanto pretende gastar?</Text>
-        <TpTextInput placeholder="R$ 1000" label="Orçamento" value={budget} onChangeText={setBudget} />
-        <Text style={styles.questionTitle}>Quando pretende ir?</Text>
-        <TpTextInput placeholder="Dezembro" label="Data" value={date} onChangeText={setDate} />
-        <TouchableOpacity onPress={onPressPlannerButton} style={styles.button} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? 'Carregando...' : 'Criar meu roteiro'}</Text>
-        </TouchableOpacity>
-        {
-          error && (
-            <View style={styles.errorContainer}>
-              <Text>Ocorreu um erro ao criar o roteiro</Text>
-            </View>
-          )
-        }
-        {
-          guide?.trim() && (
-            <View style={styles.guideContainer}>
-              <Markdown>{guide}</Markdown>
-              <TouchableOpacity onPress={onCopyGuidePressed} style={styles.buttonCopyGuide}>
-                <Text style={styles.buttonCopyGuideText}>Copiar roteiro</Text>
-              </TouchableOpacity>
-            </View>
-          )
-        }
-      </View >
-    </ScrollView>
+    <SafeAreaView style={styles.safearea}>
+      <ScrollView>
+        <View
+          style={styles.container}
+        >
+          <Text style={styles.title}>Travel Planner</Text>
+          <Text style={styles.questionTitle}>Para onde irá viajar?</Text>
+          <TpTextInput placeholder="Natal - RN" label="Destino" value={destiny} onChangeText={setDestiny} />
+          <Text style={styles.questionTitle}>Por quanto tempo?</Text>
+          <TpTextInput placeholder="3 dias" label="Tempo" value={duration} onChangeText={setDuration} />
+          <Text style={styles.questionTitle}>Quanto pretende gastar?</Text>
+          <TpTextInput placeholder="R$ 1000" label="Orçamento" value={budget} onChangeText={setBudget} />
+          <Text style={styles.questionTitle}>Quando pretende ir?</Text>
+          <TpTextInput placeholder="Dezembro" label="Data" value={date} onChangeText={setDate} />
+          <TouchableOpacity onPress={onPressPlannerButton} style={styles.button} disabled={loading}>
+            <Text style={styles.buttonText}>{loading ? 'Carregando...' : 'Criar meu roteiro'}</Text>
+          </TouchableOpacity>
+          {
+            error && (
+              <View style={styles.errorContainer}>
+                <Text>Ocorreu um erro ao criar o roteiro</Text>
+              </View>
+            )
+          }
+          {
+            guide?.trim() && (
+              <View style={styles.guideContainer}>
+                <Markdown>{guide}</Markdown>
+                <TouchableOpacity onPress={onCopyGuidePressed} style={styles.buttonCopyGuide}>
+                  <Text style={styles.buttonCopyGuideText}>Copiar roteiro</Text>
+                </TouchableOpacity>
+              </View>
+            )
+          }
+        </View >
+      </ScrollView>
+    </SafeAreaView>
   );
 }
