@@ -59,5 +59,10 @@ export const styles = StyleSheet.create({
         paddingVertical: 8,
         backgroundColor: '#5D5798',
         borderRadius: 4,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonCopyGuideText: {
+        color: 'white',
     }
 })

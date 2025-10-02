@@ -1,6 +1,7 @@
 import TpTextInput from "@/components/tpTextInput";
 import planner from "@/services/ai/planner";
 import { styles } from "@/styles";
+import * as Clipboard from 'expo-clipboard';
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Markdown from 'react-native-markdown-display';
@@ -14,7 +15,7 @@ export default function Index() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
-  const [guide, setGuide] = useState<String | undefined>(undefined)
+  const [guide, setGuide] = useState<string | undefined>(undefined)
 
   const onPressPlannerButton = async () => {
     setLoading(true)
@@ -40,6 +41,14 @@ export default function Index() {
 
     console.log(text)
     setLoading(false)
+  }
+
+  const onCopyGuidePressed = async () => {
+    if (!guide) {
+      return;
+    }
+
+    await Clipboard.setStringAsync(guide);
   }
 
 
@@ -71,6 +80,9 @@ export default function Index() {
           guide?.trim() && (
             <View style={styles.guideContainer}>
               <Markdown>{guide}</Markdown>
+              <TouchableOpacity onPress={onCopyGuidePressed} style={styles.buttonCopyGuide}>
+                <Text style={styles.buttonCopyGuideText}>Copiar roteiro</Text>
+              </TouchableOpacity>
             </View>
           )
         }
