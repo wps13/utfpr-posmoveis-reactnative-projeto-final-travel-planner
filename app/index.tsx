@@ -1,4 +1,5 @@
 import TpTextInput from "@/components/tpTextInput";
+import planner from "@/services/ai/planner";
 import { styles } from "@/styles";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -10,9 +11,13 @@ export default function Index() {
   const [date, setDate] = useState('')
 
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
-  const onPressPlannerButton = () => {
+  const [guide, setGuide] = useState<String | undefined>(undefined)
+
+  const onPressPlannerButton = async () => {
     setLoading(true)
+    setError(false)
 
     if (destiny === '') {
       alert('Insira um destino para criar um roteiro')
@@ -27,6 +32,10 @@ export default function Index() {
     if (date !== '') {
       text += ` em ${date}`
     }
+
+    var response = await planner({ userInput: text });
+    setGuide(response)
+    setError(((response?.length ?? 0) <= 0) == true)
 
     console.log(text)
     setLoading(false)
@@ -50,6 +59,20 @@ export default function Index() {
         <TouchableOpacity onPress={onPressPlannerButton} style={styles.button} disabled={loading}>
           <Text style={styles.buttonText}>{loading ? 'Carregando...' : 'Criar meu roteiro'}</Text>
         </TouchableOpacity>
+        {
+          error && (
+            <View style={styles.errorContainer}>
+              <Text>Ocorreu um erro ao criar o roteiro</Text>
+            </View>
+          )
+        }
+        {
+          guide?.trim() && (
+            <View style={styles.guideContainer}>
+              <Text>{guide}</Text>
+            </View>
+          )
+        }
       </View >
     </ScrollView>
   );

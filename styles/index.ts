@@ -38,5 +38,19 @@ export const styles = StyleSheet.create({
         borderRadius: 4,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    guideContainer: {
+        marginVertical: 16,
+        borderColor: '#8d8d8d',
+        borderWidth: 1,
+        borderRadius: 4,
+        padding: 16,
+    },
+    errorContainer: {
+        marginVertical: 16,
+        borderColor: 'red',
+        borderWidth: 1,
+        borderRadius: 4,
+        padding: 16,
     }
 })
