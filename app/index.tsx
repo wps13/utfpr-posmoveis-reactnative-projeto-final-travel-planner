@@ -3,6 +3,7 @@ import planner from "@/services/ai/planner";
 import { styles } from "@/styles";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Markdown from 'react-native-markdown-display';
 
 export default function Index() {
   const [destiny, setDestiny] = useState('')
@@ -69,7 +70,7 @@ export default function Index() {
         {
           guide?.trim() && (
             <View style={styles.guideContainer}>
-              <Text>{guide}</Text>
+              <Markdown>{guide}</Markdown>
             </View>
           )
         }

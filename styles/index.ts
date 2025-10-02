@@ -52,5 +52,12 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 4,
         padding: 16,
+    },
+    buttonCopyGuide: {
+        marginTop: 16,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        backgroundColor: '#5D5798',
+        borderRadius: 4,
     }
 })
