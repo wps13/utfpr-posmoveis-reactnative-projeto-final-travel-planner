@@ -17,7 +17,7 @@ async function planner({ userInput }: IPlanner) {
         },
         systemInstruction: [
             {
-                text: `Gostaria que você ajudasse a montar um roteiro de viagens, onde o usuário irá indicar o destino, quantidade de dias e período da viagem, recomendar lugares para ir e para evitar, caso seja inserido um valor de orçamento considerar também antes de sugerir locais. Por exemplo, se um usuário inserir curitiba por 3 dias, pode sugerir usar a linha de turismo, visitar feiras, etc. Evitar sugerir atrações descontinuadas ou que possam ter algum risco, como localizada em regiões perigosas.`,
+                text: `Gostaria que você ajudasse a montar um roteiro de viagens, onde o usuário irá indicar o destino, quantidade de dias e período da viagem, recomendar lugares para ir e para evitar, caso seja inserido um valor de orçamento considerar também antes de sugerir locais. Por exemplo, se um usuário inserir curitiba por 3 dias, pode sugerir usar a linha de turismo, visitar feiras, etc. Evitar sugerir atrações descontinuadas ou que possam ter algum risco, como localizada em regiões perigosas.Evitar pedir informações adicionais.`,
             }
         ],
     };
