@@ -27,7 +27,8 @@ export const styles = StyleSheet.create({
     questionTitle: {
         fontSize: 16,
         fontWeight: 'bold',
-        marginBottom: 12,
+        marginBottom: 8,
+        marginTop: 12,
     },
     buttonText: {
         fontSize: 18,

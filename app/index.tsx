@@ -25,6 +25,7 @@ export default function Index() {
   const onPressPlannerButton = async () => {
     setLoading(true)
     setError(false)
+    setGuide(undefined)
 
     if (destiny === '') {
       alert('Insira um destino para criar um roteiro')
@@ -66,7 +67,7 @@ export default function Index() {
 
           <TpQuestionLine label="Destino" placeholder="Natal - RN" value={destiny} onChangeText={setDestiny} question="Para onde irá viajar?" />
 
-          <TpQuestionLine label="Duração" placeholder="3 dias" value={duration} onChangeText={setDuration} question="Por quantos tempo?" />
+          <TpQuestionLine label="Duração" placeholder="3 dias" value={duration} onChangeText={setDuration} question="Por quanto tempo?" />
 
           <TpQuestionLine label="Orçamento" placeholder="R$ 1000" value={budget} onChangeText={setBudget} question="Quanto pretende gastar?" />
 
