@@ -1,11 +1,14 @@
-import TpTextInput from "@/components/tpTextInput";
+import TpCreateGuideButton from "@/components/tpCreateGuideButton";
+import TpError from "@/components/tpError";
+import TpGuide from "@/components/tpGuide";
+import TpQuestionLine from "@/components/tpQuestionLine";
+import TpTitle from "@/components/tpTitle";
 import planner from "@/services/ai/planner";
 import { styles } from "@/styles";
 
 import * as Clipboard from 'expo-clipboard';
 import { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import Markdown from 'react-native-markdown-display';
+import { ScrollView, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Index() {
@@ -29,7 +32,7 @@ export default function Index() {
       alert('Insira um tempo para criar um roteiro')
     }
 
-    var text = `Viajar para ${destiny} por ${duration}`
+    let text = `Viajar para ${destiny} por ${duration}`
     if (budget !== '') {
       text += ` com um orçamento de ${budget}`
     }
@@ -37,11 +40,10 @@ export default function Index() {
       text += ` em ${date}`
     }
 
-    var response = await planner({ userInput: text });
+    let response = await planner({ userInput: text });
     setGuide(response)
-    setError(((response?.length ?? 0) <= 0) == true)
+    setError(((response?.length ?? 0) <= 0) === true)
 
-    console.log(text)
     setLoading(false)
   }
 
@@ -60,35 +62,20 @@ export default function Index() {
         <View
           style={styles.container}
         >
-          <Text style={styles.title}>Travel Planner</Text>
-          <Text style={styles.questionTitle}>Para onde irá viajar?</Text>
-          <TpTextInput placeholder="Natal - RN" label="Destino" value={destiny} onChangeText={setDestiny} />
-          <Text style={styles.questionTitle}>Por quanto tempo?</Text>
-          <TpTextInput placeholder="3 dias" label="Tempo" value={duration} onChangeText={setDuration} />
-          <Text style={styles.questionTitle}>Quanto pretende gastar?</Text>
-          <TpTextInput placeholder="R$ 1000" label="Orçamento" value={budget} onChangeText={setBudget} />
-          <Text style={styles.questionTitle}>Quando pretende ir?</Text>
-          <TpTextInput placeholder="Dezembro" label="Data" value={date} onChangeText={setDate} />
-          <TouchableOpacity onPress={onPressPlannerButton} style={styles.button} disabled={loading}>
-            <Text style={styles.buttonText}>{loading ? 'Carregando...' : 'Criar meu roteiro'}</Text>
-          </TouchableOpacity>
-          {
-            error && (
-              <View style={styles.errorContainer}>
-                <Text>Ocorreu um erro ao criar o roteiro</Text>
-              </View>
-            )
-          }
-          {
-            guide?.trim() && (
-              <View style={styles.guideContainer}>
-                <Markdown>{guide}</Markdown>
-                <TouchableOpacity onPress={onCopyGuidePressed} style={styles.buttonCopyGuide}>
-                  <Text style={styles.buttonCopyGuideText}>Copiar roteiro</Text>
-                </TouchableOpacity>
-              </View>
-            )
-          }
+          <TpTitle title="Travel Planner" />
+
+          <TpQuestionLine label="Destino" placeholder="Natal - RN" value={destiny} onChangeText={setDestiny} question="Para onde irá viajar?" />
+
+          <TpQuestionLine label="Duração" placeholder="3 dias" value={duration} onChangeText={setDuration} question="Por quantos tempo?" />
+
+          <TpQuestionLine label="Orçamento" placeholder="R$ 1000" value={budget} onChangeText={setBudget} question="Quanto pretende gastar?" />
+
+          <TpQuestionLine label="Data" placeholder="Dezembro" value={date} onChangeText={setDate} question="Quando pretende ir?" />
+
+          <TpCreateGuideButton onPressPlannerButton={onPressPlannerButton} loading={loading} />
+
+          <TpError error={error} />
+          <TpGuide guide={guide} onCopyGuidePressed={onCopyGuidePressed} />
         </View >
       </ScrollView>
     </SafeAreaView>
